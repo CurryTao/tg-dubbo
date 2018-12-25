@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+ 
+    <dubbo:application name="Consumer-shoper"/>
+ 
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+   
+    <dubbo:reference id="sellerApi" interface="com.tg.fyc.sellergoods.api.SellerApi" />
+    <dubbo:reference id="goodsEditApi" interface="com.tg.fyc.sellergoods.api.GoodsEditApi" />
+    <dubbo:reference id="itemCatApi" interface="com.tg.fyc.sellergoods.api.ItemCatApi" />
+    <dubbo:reference id="typeTemplateApi" interface="com.tg.fyc.sellergoods.api.TypeTemplateApi" />
+    <dubbo:reference id="promotionApi" interface="com.tg.fyc.promotion.api.PromotionApi" />
+    <dubbo:reference id="promotionTypeApi" interface="com.tg.fyc.promotion.api.PromotionTypeApi" />
+    
+    <dubbo:monitor protocol="registry"/>
+    
+</beans>

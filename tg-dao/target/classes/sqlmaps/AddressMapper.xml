@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tg.fyc.dao.AddressMapper" >
+  <resultMap id="BaseResultMap" type="com.tg.fyc.pojo.Address" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="user_id" property="userId" jdbcType="VARCHAR" />
+    <result column="province_id" property="provinceId" jdbcType="VARCHAR" />
+    <result column="city_id" property="cityId" jdbcType="VARCHAR" />
+    <result column="town_id" property="townId" jdbcType="VARCHAR" />
+    <result column="mobile" property="mobile" jdbcType="VARCHAR" />
+    <result column="address" property="address" jdbcType="VARCHAR" />
+    <result column="contact" property="contact" jdbcType="VARCHAR" />
+    <result column="is_default" property="isDefault" jdbcType="VARCHAR" />
+    <result column="notes" property="notes" jdbcType="VARCHAR" />
+    <result column="create_date" property="createDate" jdbcType="TIMESTAMP" />
+    <result column="alias" property="alias" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, user_id, province_id, city_id, town_id, mobile, address, contact, is_default, 
+    notes, create_date, alias
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_address
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findListByLoginUser" resultMap="BaseResultMap" parameterType="string" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_address
+    where user_id = #{username}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_address
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.tg.fyc.pojo.Address" >
+    insert into tb_address (id, user_id, province_id, 
+      city_id, town_id, mobile, 
+      address, contact, is_default, 
+      notes, create_date, alias
+      )
+    values (#{id,jdbcType=BIGINT}, #{userId,jdbcType=VARCHAR}, #{provinceId,jdbcType=VARCHAR}, 
+      #{cityId,jdbcType=VARCHAR}, #{townId,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, 
+      #{address,jdbcType=VARCHAR}, #{contact,jdbcType=VARCHAR}, #{isDefault,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{createDate,jdbcType=TIMESTAMP}, #{alias,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.tg.fyc.pojo.Address" >
+    insert into tb_address
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        user_id,
+      </if>
+      <if test="provinceId != null" >
+        province_id,
+      </if>
+      <if test="cityId != null" >
+        city_id,
+      </if>
+      <if test="townId != null" >
+        town_id,
+      </if>
+      <if test="mobile != null" >
+        mobile,
+      </if>
+      <if test="address != null" >
+        address,
+      </if>
+      <if test="contact != null" >
+        contact,
+      </if>
+      <if test="isDefault != null" >
+        is_default,
+      </if>
+      <if test="notes != null" >
+        notes,
+      </if>
+      <if test="createDate != null" >
+        create_date,
+      </if>
+      <if test="alias != null" >
+        alias,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="townId != null" >
+        #{townId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alias != null" >
+        #{alias,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tg.fyc.pojo.Address" >
+    update tb_address
+    <set >
+      <if test="userId != null" >
+        user_id = #{userId,jdbcType=VARCHAR},
+      </if>
+      <if test="provinceId != null" >
+        province_id = #{provinceId,jdbcType=VARCHAR},
+      </if>
+      <if test="cityId != null" >
+        city_id = #{cityId,jdbcType=VARCHAR},
+      </if>
+      <if test="townId != null" >
+        town_id = #{townId,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null" >
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="address != null" >
+        address = #{address,jdbcType=VARCHAR},
+      </if>
+      <if test="contact != null" >
+        contact = #{contact,jdbcType=VARCHAR},
+      </if>
+      <if test="isDefault != null" >
+        is_default = #{isDefault,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null" >
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+      <if test="createDate != null" >
+        create_date = #{createDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="alias != null" >
+        alias = #{alias,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tg.fyc.pojo.Address" >
+    update tb_address
+    set user_id = #{userId,jdbcType=VARCHAR},
+      province_id = #{provinceId,jdbcType=VARCHAR},
+      city_id = #{cityId,jdbcType=VARCHAR},
+      town_id = #{townId,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      address = #{address,jdbcType=VARCHAR},
+      contact = #{contact,jdbcType=VARCHAR},
+      is_default = #{isDefault,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR},
+      create_date = #{createDate,jdbcType=TIMESTAMP},
+      alias = #{alias,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

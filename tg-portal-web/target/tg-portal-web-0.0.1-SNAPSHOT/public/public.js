@@ -1,0 +1,10 @@
+document.writeln("    <link rel=\'stylesheet\' href=\'../plugins/adminLTE/css/AdminLTE.css\'>");
+document.writeln("    <link rel=\'stylesheet\' href=\'../plugins/adminLTE/css/skins/_all-skins.min.css\'>");
+document.writeln("    <link rel=\'stylesheet\' href=\'../css/style.css\'>");
+document.writeln("     <link rel=\'stylesheet\' href=\'../plugins/angularjs/pagination.css\'>");
+document.writeln("	<script src=\'../plugins/jQuery/jquery-2.2.3.min.js\'></script>");
+document.writeln("    <script src=\'../plugins/bootstrap/js/bootstrap.min.js\'></script>");
+document.writeln("	<script src=\'../plugins/angularjs/angular.min.js\'></script>");
+document.writeln("	<script src=\'../plugins/angularjs/pagination.js\'></script>");
+document.writeln("	<script src=\'../js/base_pagination.js\'></script>");
+document.writeln("	<script src=\'../plugins/adminLTE/js/app.min.js\'></script>");

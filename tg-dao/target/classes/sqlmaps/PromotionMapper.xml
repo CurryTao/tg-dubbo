@@ -1,0 +1,283 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.tg.fyc.dao.PromotionMapper" >
+  <resultMap id="BaseResultMap" type="com.tg.fyc.pojo.Promotion" >
+    <id column="id" property="id" jdbcType="BIGINT" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="typeid" property="typeid" jdbcType="INTEGER" />
+    <result column="typename" property="typename" jdbcType="VARCHAR" />
+    <result column="lessprice" property="lessprice" jdbcType="REAL" />
+    <result column="content" property="content" jdbcType="VARCHAR" />
+    <result column="gift" property="gift" jdbcType="VARCHAR" />
+    <result column="starttime" property="starttime" jdbcType="DATE" />
+    <result column="endtime" property="endtime" jdbcType="TIMESTAMP" />
+    <result column="goods_ids" property="goodsIds" jdbcType="VARCHAR" />
+    <result column="seller_id" property="sellerId" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="INTEGER" />
+    <result column="creattime" property="creattime" jdbcType="DATE" />
+    <result column="creatby" property="creatby" jdbcType="VARCHAR" />
+    <result column="updatetime" property="updatetime" jdbcType="DATE" />
+    <result column="updateby" property="updateby" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, title, typeid, typename, lessprice, content, gift, starttime, endtime, goods_ids, 
+    seller_id, status, creattime, creatby, updatetime, updateby
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_promotion
+    where id = #{id,jdbcType=BIGINT}
+  </select>
+  <select id="findListByGoodsId" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_promotion
+    <where>
+    	status='2'
+    	and starttime &lt; NOW() 
+    	and endtime &gt; NOW()
+    	<if test="goodsIds!=null and goodsIds!=''">
+    		goods_ids = #{goodsIds}
+    	</if>
+    </where>
+  </select>
+  
+  <select id="findAll" resultMap="BaseResultMap" parameterType="java.lang.Long" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_promotion
+    <where>
+    	 status='2'
+    	 <if test="goodsId!=null and goodsId!=''">
+    	 	and goods_id=#{goodsId}
+    	 </if>
+    </where>
+  </select>
+  
+  <select id="findlistForSeller" resultMap="BaseResultMap" parameterType="com.tg.fyc.pojo.Promotion" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_promotion
+    <where>
+    	status in (0,1,2,3)
+    	<if test="sellerId!=null and sellerId!=''">
+    		and seller_id = #{sellerId}
+    	</if>
+    	<if test="status!=null and status!=''">
+    		and status = #{status}
+    	</if>
+    	<if test="title!=null and title!=''">
+    		and title like "%"#{title}"%"
+    	</if>
+    	<if test="typename!=null and typename!=''">
+    		and typename like "%"#{typename}"%"
+    	</if>
+    </where>
+  </select>
+  <select id="findlistForManger" resultMap="BaseResultMap" parameterType="com.tg.fyc.pojo.Promotion" >
+    select 
+    <include refid="Base_Column_List" />
+    from tb_promotion
+    <where>
+    	and status in (1,2,3)
+    	<if test="title!=null and title!=''">
+    		and title like "%"#{title}"%"
+    	</if>
+    	<if test="typename!=null and typename!=''">
+    		and typename like "%"#{typename}"%"
+    	</if>
+    </where>
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Long" >
+    delete from tb_promotion
+    where id = #{id,jdbcType=BIGINT}
+  </delete>
+  <insert id="insert" parameterType="com.tg.fyc.pojo.Promotion" >
+    insert into tb_promotion (id, title, typeid, 
+      typename, lessprice, content, 
+      gift, starttime, endtime, 
+      goods_ids, seller_id, status, 
+      creattime, creatby, updatetime, 
+      updateby)
+    values (#{id,jdbcType=BIGINT}, #{title,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
+      #{typename,jdbcType=VARCHAR}, #{lessprice,jdbcType=REAL}, #{content,jdbcType=VARCHAR}, 
+      #{gift,jdbcType=VARCHAR}, #{starttime,jdbcType=DATE}, #{endtime,jdbcType=TIMESTAMP}, 
+      #{goodsIds,jdbcType=BIGINT}, #{sellerId,jdbcType=BIGINT}, #{status,jdbcType=INTEGER}, 
+      #{creattime,jdbcType=DATE}, #{creatby,jdbcType=VARCHAR}, #{updatetime,jdbcType=DATE}, 
+      #{updateby,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.tg.fyc.pojo.Promotion" >
+    insert into tb_promotion
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="typeid != null" >
+        typeid,
+      </if>
+      <if test="typename != null" >
+        typename,
+      </if>
+      <if test="lessprice != null" >
+        lessprice,
+      </if>
+      <if test="content != null" >
+        content,
+      </if>
+      <if test="gift != null" >
+        gift,
+      </if>
+      <if test="starttime != null" >
+        starttime,
+      </if>
+      <if test="endtime != null" >
+        endtime,
+      </if>
+      <if test="goodsIds != null" >
+        goods_ids,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="creattime != null" >
+        creattime,
+      </if>
+      <if test="creatby != null" >
+        creatby,
+      </if>
+      <if test="updatetime != null" >
+        updatetime,
+      </if>
+      <if test="updateby != null" >
+        updateby,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=BIGINT},
+      </if>
+      <if test="title != null" >
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="lessprice != null" >
+        #{lessprice,jdbcType=REAL},
+      </if>
+      <if test="content != null" >
+        #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="gift != null" >
+        #{gift,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsIds != null" >
+        #{goodsIds,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null" >
+        #{creattime,jdbcType=DATE},
+      </if>
+      <if test="creatby != null" >
+        #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="updateby != null" >
+        #{updateby,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.tg.fyc.pojo.Promotion" >
+    update tb_promotion
+    <set >
+      <if test="title != null" >
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="typeid != null" >
+        typeid = #{typeid,jdbcType=INTEGER},
+      </if>
+      <if test="typename != null" >
+        typename = #{typename,jdbcType=VARCHAR},
+      </if>
+      <if test="lessprice != null" >
+        lessprice = #{lessprice,jdbcType=REAL},
+      </if>
+      <if test="content != null" >
+        content = #{content,jdbcType=VARCHAR},
+      </if>
+      <if test="gift != null" >
+        gift = #{gift,jdbcType=VARCHAR},
+      </if>
+      <if test="starttime != null" >
+        starttime = #{starttime,jdbcType=DATE},
+      </if>
+      <if test="endtime != null" >
+        endtime = #{endtime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="goodsIds != null" >
+        goods_ids = #{goodsIds,jdbcType=BIGINT},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=BIGINT},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=INTEGER},
+      </if>
+      <if test="creattime != null" >
+        creattime = #{creattime,jdbcType=DATE},
+      </if>
+      <if test="creatby != null" >
+        creatby = #{creatby,jdbcType=VARCHAR},
+      </if>
+      <if test="updatetime != null" >
+        updatetime = #{updatetime,jdbcType=DATE},
+      </if>
+      <if test="updateby != null" >
+        updateby = #{updateby,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.tg.fyc.pojo.Promotion" >
+    update tb_promotion
+    set title = #{title,jdbcType=VARCHAR},
+      typeid = #{typeid,jdbcType=INTEGER},
+      typename = #{typename,jdbcType=VARCHAR},
+      lessprice = #{lessprice,jdbcType=REAL},
+      content = #{content,jdbcType=VARCHAR},
+      gift = #{gift,jdbcType=VARCHAR},
+      starttime = #{starttime,jdbcType=DATE},
+      endtime = #{endtime,jdbcType=TIMESTAMP},
+      goods_ids = #{goodsIds,jdbcType=BIGINT},
+      seller_id = #{sellerId,jdbcType=BIGINT},
+      status = #{status,jdbcType=INTEGER},
+      creattime = #{creattime,jdbcType=DATE},
+      creatby = #{creatby,jdbcType=VARCHAR},
+      updatetime = #{updatetime,jdbcType=DATE},
+      updateby = #{updateby,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=BIGINT}
+  </update>
+</mapper>

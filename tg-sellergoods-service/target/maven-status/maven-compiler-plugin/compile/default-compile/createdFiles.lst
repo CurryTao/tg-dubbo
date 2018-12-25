@@ -1,0 +1,6 @@
+com\tg\fyc\sellergoods\service\ItemCatServiceImpl.class
+com\tg\fyc\sellergoods\service\GoodsEditServiceImpl.class
+com\tg\fyc\sellergoods\service\SpecificationServiceImpl.class
+com\tg\fyc\sellergoods\service\BrandServiceImpl.class
+com\tg\fyc\sellergoods\service\SellerServiceImpl.class
+com\tg\fyc\sellergoods\service\TypeTemplateServiceImpl.class

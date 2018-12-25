@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+	http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
+ 
+    <dubbo:application name="Consumer-cart"/>
+ 
+    <dubbo:registry address="zookeeper://127.0.0.1:2181" />
+   
+    <dubbo:reference id="cartApi" interface="com.tg.fyc.cart.api.CartApi" check="false"/>
+    <dubbo:reference id="addressApi" interface="com.tg.fyc.user.api.AddressApi" check="false"/>
+    <dubbo:reference id="orderApi" interface="com.tg.fyc.order.api.OrderApi" check="false"/>
+    <dubbo:reference id="weiXinPayAPi" interface="com.tg.fyc.pay.api.WeiXinPayAPi" check="false"/>
+    
+    <dubbo:monitor protocol="registry"/>
+    
+</beans>

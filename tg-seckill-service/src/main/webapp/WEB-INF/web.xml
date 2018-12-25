@@ -1,0 +1,23 @@
+<!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" >
+
+<web-app>
+
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>
+			classpath*:spring/applicationContext-redis.xml,
+			classpath*:spring/applicationContext-dao.xml,
+			classpath:spring/seckill-provider.xml,
+			classpath:spring/spring-tx.xml
+		</param-value>
+	</context-param>
+
+	<display-name>demo</display-name>
+	
+</web-app>

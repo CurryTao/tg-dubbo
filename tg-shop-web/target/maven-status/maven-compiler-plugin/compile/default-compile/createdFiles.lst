@@ -1,0 +1,7 @@
+com\tg\fyc\shop\service\UserDetailsServiceImpl.class
+com\tg\fyc\shop\controller\ItemCatController.class
+com\tg\fyc\shop\controller\PromotionController.class
+com\tg\fyc\shop\controller\IndexController.class
+com\tg\fyc\shop\controller\SellerController.class
+com\tg\fyc\shop\controller\GoodsEditController.class
+com\tg\fyc\shop\controller\TypeTemplateController.class

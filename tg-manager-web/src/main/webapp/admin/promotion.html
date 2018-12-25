@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- 页面meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>商品管理</title>
+
+<meta content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no" name="viewport">
+
+<link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+
+<script type="text/javascript" src="../public/public.js"></script>
+<script type="text/javascript" src="../js/service/goodsEditService.js"></script>
+<script type="text/javascript" src="../js/service/promotionEditService.js"></script>
+<script type="text/javascript" src="../js/service/typeTemplateService.js"></script>
+<script type="text/javascript" src="../js/service/itemCatService.js"></script>
+<script type="text/javascript" src="../js/service/uploadService.js"></script>
+<script type="text/javascript" src="../js/controller/baseController.js"></script>
+<script type="text/javascript" src="../js/controller/promotionEditController.js"></script>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="brandApp"
+	ng-controller="promotionEditController">
+	<!-- .box-body -->
+
+	<div class="box-header with-border">
+		<h3 class="box-title">商品管理</h3>
+	</div>
+
+	<div class="box-body">
+
+		<!-- 数据表格 -->
+		<div class="table-box">
+
+			<!--工具栏-->
+			<div class="pull-left">
+				<div class="form-group form-inline">
+					<div class="btn-group">
+						<button type="button" class="btn btn-default" title="新建">
+							<i class="fa fa-file-o"></i> 新建
+						</button>
+						<button type="button" class="btn btn-default" title="删除"
+							ng-click="updateStatus(4)">
+							<i class="fa fa-trash-o"></i> 删除
+						</button>
+						<button type="button" class="btn btn-default" title="提交审核"
+							ng-click="updateStatus(2)">
+							<i class="fa fa-check"></i> 审核通过
+						</button>
+						<button type="button" class="btn btn-default" title="屏蔽"
+							onclick='confirm("你确认要屏蔽吗？")'>
+							<i class="fa fa-ban"></i> 屏蔽
+						</button>
+						<button type="button" class="btn btn-default" title="刷新"
+							onclick="window.location.reload();">
+							<i class="fa fa-refresh"></i> 刷新
+						</button>
+					</div>
+				</div>
+			</div>
+			<div class="box-tools pull-right">
+				<div class="has-feedback">
+					状态：<select ng-model="mohu.auditStatus">
+						<option value="">全部</option>
+						<option value="0">未申请</option>
+						<option value="1">申请中</option>
+						<option value="2">审核通过</option>
+						<option value="3">已驳回</option>
+					</select> 商品名称：<input ng-model="mohu.goodsName">
+					<button class="btn btn-default" ng-click="reloadList()">查询</button>
+				</div>
+			</div>
+			<!--工具栏/-->
+
+			<!--数据列表-->
+			<table id="dataList"
+				class="table table-bordered table-striped table-hover dataTable">
+				<thead>
+					<tr>
+						<th class="" style="padding-right: 0px"><input id="selall"
+							type="checkbox" class="icheckbox_square-blue"></th>
+						<th class="sorting_asc">活动ID</th>
+						<th class="sorting">活动名称</th>
+						<th class="sorting">活动类型</th>
+						<th class="sorting">活动减免价格</th>
+						<th class="sorting">活动开始日期</th>
+						<th class="sorting">活动结束日期</th>
+						<th class="sorting">活动赠品</th>
+						<th class="sorting">状态</th>
+						<th class="text-center">操作</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr ng-repeat="entity in list">
+						<td><input type="checkbox" ng-click="shanchu($event,entity.id)"></td>
+						<td>{{entity.id}}</td>
+						<td>{{entity.title}}</td>
+						<td>{{entity.typename}}</td>
+						<td>{{entity.lessprice}}</td>
+						<td>{{entity.starttime}}</td>
+						<td>{{entity.endtime}}</td>
+						<td>{{JsonMethod(entity.gift,'goodsName')}}
+						</td>
+						<td><span ng-if="entity.status==0"> 未提交申请 </span> <span
+							ng-if="entity.status==1"> 申请中 </span> <span
+							ng-if="entity.status==2"> 审核通过 </span> <span
+							ng-if="entity.status==3"> 以驳回 </span></td>
+						<td class="text-center"><a href="promotion_edit.html#?id={{entity.id}}"
+							class="btn bg-olive btn-xs">修改</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<!--数据列表/-->
+			
+		</div>
+		<!-- 数据表格 /-->
+		<tm-Pagination conf="myPage"></tm-Pagination>
+		
+	</div>
+	<!-- /.box-body -->
+</body>
+
+</html>

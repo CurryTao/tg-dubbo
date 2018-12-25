@@ -1,0 +1,1 @@
+ var brandApp=angular.module('brandApp',['pagination']);

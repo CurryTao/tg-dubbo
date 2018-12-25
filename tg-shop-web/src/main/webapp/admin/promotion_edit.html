@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<!-- 页面meta -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<title>促销商品编辑</title>
+<!-- Tell the browser to be responsive to screen width -->
+<meta
+	content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"
+	name="viewport">
+
+<link rel="stylesheet" href="../plugins/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="../plugins/adminLTE/css/AdminLTE.css">
+<link rel="stylesheet"
+	href="../plugins/adminLTE/css/skins/_all-skins.min.css">
+<link rel="stylesheet" href="../css/style.css">
+<script src="../plugins/jQuery/jquery-2.2.3.min.js"></script>
+<script src="../plugins/bootstrap/js/bootstrap.min.js"></script>
+<script src="..\plugins\My97DatePicker\WdatePicker.js"></script>
+
+<!-- 富文本编辑器 -->
+<link rel="stylesheet"
+	href="../plugins/kindeditor/themes/default/default.css" />
+<script charset="utf-8" src="../plugins/kindeditor/kindeditor-min.js"></script>
+<script charset="utf-8" src="../plugins/kindeditor/lang/zh_CN.js"></script>
+
+<script type="text/javascript" src="../public/public.js"></script>
+<script type="text/javascript"
+	src="../js/service/promotionEditService.js"></script>
+<script type="text/javascript" src="../js/service/goodsEditService.js"></script>
+<script type="text/javascript"
+	src="../js/service/typeTemplateService.js"></script>
+<script type="text/javascript" src="../js/service/itemCatService.js"></script>
+<script type="text/javascript" src="../js/service/uploadService.js"></script>
+<script type="text/javascript" src="../js/controller/baseController.js"></script>
+<script type="text/javascript"
+	src="../js/controller/promotionEditController.js"></script>
+
+</head>
+
+<body class="hold-transition skin-red sidebar-mini" ng-app="brandApp"
+	ng-controller="promotionEditController" ng-init="initData()">
+
+	<!-- 正文区域 -->
+	<section class="content">
+
+		<div class="box-body">
+
+			<!--tab页-->
+			<div class="nav-tabs-custom">
+
+				<!--tab头-->
+				<ul class="nav nav-tabs">
+					<li class="active"><a href="#home" data-toggle="tab">促销基本信息</a></li>
+					<li><a href="#pic_upload" data-toggle="tab">赠品管理</a></li>
+				</ul>
+
+				<!--tab内容-->
+				<div class="tab-content">
+
+					<!--表单内容-->
+					<div class="tab-pane active" id="home">
+						<div class="row data-type">
+
+							<div class="col-md-2 title">促销活动名称</div>
+							<div class="col-md-10 data">
+								<input type="text" class="form-control" ng-model="entity.title"
+									placeholder="促销活动名称" value="">
+							</div>
+
+							<div class="col-md-2 title">促销类型</div>
+							<div class="col-md-10 data">
+								<table>
+									<tr>
+										<td><select class="form-control" ng-model="entity.typeid"
+											ng-options=" item.id as item.name for item in promotionTypeList">
+										</select></td>
+									</tr>
+								</table>
+							</div>
+
+							<div class="col-md-2 title">活动起始时间</div>
+							<div class="col-md-10 data">
+								<input type="text" class="form-control" id="starttime"
+									 placeholder="活动起始时间" 
+									id='datetime2' onclick="WdatePicker()">
+							</div>
+
+							<div class="col-md-2 title ">活动结束时间</div>
+							<div class="col-sm-10 data ">
+								<input type="text" class="form-control" id="endtime"
+									 placeholder="活动结束时间"
+									id='datetime2' onclick="WdatePicker()">
+							</div>
+
+							<div class="col-md-2 title">减免费用</div>
+							<div class="col-md-10 data">
+								<div class="input-group">
+									<span class="input-group-addon">¥</span> <input type="text"
+										class="form-control" ng-model="entity.lessprice"
+										placeholder="价格" value="">
+								</div>
+							</div>
+
+							<div class="col-md-2 title">活动介绍</div>
+							<div class="col-md-10 data">
+								<input type="text" class="form-control"
+									ng-model="entity.content" placeholder="活动介绍" value="">
+							</div>
+
+							<div class="col-md-2 title">选择活动对应的商品</div>
+							<div class="col-md-10 data">
+								<button type="button" class="btn btn-default" title="选择商品"
+									data-target="#uploadModal2" data-toggle="modal">
+									<i class="fa fa-file-o"></i> 选择商品
+								</button>
+							</div>
+
+							<div class="col-md-2 title editer">活动对应的商品</div>
+							<div class="col-md-10 data editer">
+								<table
+									class="table table-bordered table-striped table-hover dataTable">
+									<thead>
+										<tr>
+											<th class="sorting">商品id</th>
+											<th class="sorting">商品名称</th>
+										</tr>
+									</thead>
+									<tbody>
+										<tr ng-repeat="pojo in goodsList">
+											<td>{{pojo.id}}</td>
+											<td>{{pojo.goodsName}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+
+					<!--选择赠品-->
+					<div class="tab-pane" id="pic_upload">
+						<div class="row data-type">
+							<div class="btn-group">
+								<button type="button" class="btn btn-default" title="选择商品"
+									ng-click="image_entity={}" data-target="#uploadModal1"
+									data-toggle="modal">
+									<i class="fa fa-file-o"></i> 选择商品
+								</button>
+							</div>
+
+							<table
+								class="table table-bordered table-striped table-hover dataTable">
+								<thead>
+									<tr>
+										<th class="sorting">商品id</th>
+										<th class="sorting">商品名称</th>
+									</tr>
+								</thead>
+								<tbody>
+									<tr ng-repeat="pojo in giftList">
+										<td>{{pojo.id}}</td>
+										<td>{{pojo.goodsName}}</td>
+									</tr>
+								</tbody>
+							</table>
+
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="btn-toolbar list-toolbar">
+			<button class="btn btn-primary" ng-click="save()">
+				<i class="fa fa-save"></i>保存
+			</button>
+			<a href="promotion.html" class="btn btn-default">返回列表</a>
+		</div>
+	</section>
+
+	<!-- 选择赠品 -->
+	<div class="modal fade" id="uploadModal1" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-hidden="true">×</button>
+					<h3 id="myModalLabel">选择商品</h3>
+				</div>
+				<div class="modal-body">
+					<table id="dataList">
+						<thead>
+							<tr>
+								<th class="" style="padding-right: 0px"><input id="selall"
+									type="checkbox" class="icheckbox_square-blue"></th>
+								<th class="sorting_asc">商品ID</th>
+								<th class="sorting">商品名称</th>
+								<th class="sorting">商品价格</th>
+								<th class="sorting">状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="entity in itemlist">
+								<td><input type="checkbox"
+									ng-click="changeGift($event,$index)"></td>
+								<td>{{entity.id}}</td>
+								<td>{{entity.goodsName}}</td>
+								<td>{{entity.price}}</td>
+								<td>审核通过</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal"
+						aria-hidden="true">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- 选择促销商品 -->
+	<div class="modal fade" id="uploadModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+					<h3 id="myModalLabel">选择商品</h3>
+				</div>
+				<div class="modal-body">
+					<table id="dataList">
+						<thead>
+							<tr>
+								<th class="" style="padding-right: 0px"><input id="selall"
+									type="checkbox" class="icheckbox_square-blue"></th>
+								<th class="sorting_asc">商品ID</th>
+								<th class="sorting">商品名称</th>
+								<th class="sorting">商品价格</th>
+								<th class="sorting">状态</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr ng-repeat="entity in itemlist">
+								<td><input type="checkbox"
+									ng-click="changeGoods($event,$index)"></td>
+								<td>{{entity.id}}</td>
+								<td>{{entity.goodsName}}</td>
+								<td>{{entity.price}}</td>
+								<td>审核通过</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+				<div class="modal-footer">
+					<button class="btn btn-default" data-dismiss="modal" aria-hidden="true" ng-click="removeData()">关闭</button>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<!-- 正文区域 /-->
+	<script type="text/javascript">
+		var editor;
+		KindEditor.ready(function(K) {
+			editor = K.create('textarea[name="content"]', {
+				allowFileManager : true
+			});
+		});
+	</script>
+</body>
+</html>
